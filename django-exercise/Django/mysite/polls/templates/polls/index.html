@@ -1,0 +1,26 @@
+{% load static %}
+
+<!--Navbar-->
+{% if user.is_authenticated %}
+    
+<h3 ><a class="nav-link" style="color: red;" href="/logout">Logout</a></h3>
+<h3 ><a class="nav-link" style="color: black;"href="#">Welcome, {{user.username}}</a></h3>
+{% else %}
+
+<li class="nav-item">
+    <a class="nav-link" href="/login">Login</a>
+</li>
+
+{% endif %}
+
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+{% if latest_question_list %}
+    <ul>
+    {% for question in latest_question_list %}
+        <!-- <li><a href="/polls/{{ question.id }}/">{{ question.question_text }}</a></li> -->
+        <li><a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
